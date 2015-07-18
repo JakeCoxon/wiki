@@ -1,24 +1,27 @@
 import React from 'react'
-import FileLoadingStore from '../stores/file-loading-store.js'
+import FileStore from '../stores/file-store.js'
+import FileSavingService from '../services/file-saving-service.js'
 
 const TreeView = React.createClass({
     componentWillMount() {
-        FileLoadingStore.getState(state =>
+        FileStore.getState(state =>
             this.setState({ title: state.title }));
 
-        this.loadFile = this.loadFile.bind(this);
-        this.saveFile = this.saveFile.bind(this);
     },
 
 
-    loadFile() {
-        FileLoadingStore.loadFile();
+    pickFile() {
+        FileStore.pickFile();
     },
 
     saveFile() {
         if (this.state.title) {
-            FileSavingStore.saveFile();
+            FileSavingService.saveFile();
         }
+    },
+
+    onLoadExample() {
+        FileStore.loadExample();
     },
 
     render() {
@@ -26,7 +29,8 @@ const TreeView = React.createClass({
         return (
             <div>
 
-                <button onClick={this.loadFile}>Load</button>
+                <button onClick={this.onLoadExample}>Ex.</button>
+                <button onClick={this.pickFile}>Load</button>
                 { this.state.title ? 
                     <span>
                         <button onClick={this.saveFile}>Save</button> 

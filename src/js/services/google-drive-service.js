@@ -130,9 +130,11 @@ function uploadContent(fileId, title, content) {
     });
 }
 
-
-function setup() {
-    gapi.load('picker', {'callback': function() {  }});
+var initialized = false;
+function init() {
+    if (initialized) return;
+    initialized = true;
+    window.gapi && gapi.load('picker', {'callback': function() {  }});
 }
 
 function openPicker() {
@@ -185,12 +187,13 @@ function save(fileId, title, content) {
 
 }
 
+
 export default {
 
-    setup: setup,
     load: load,
     pick: pick,
     save: save,
+    init: init
 
     // auth: auth,
     // getMetaData: getMetaData,

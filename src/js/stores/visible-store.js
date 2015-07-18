@@ -7,9 +7,24 @@ export default Hoverboard({
         return { visible: [] };
     },
 
+    onToggle(documentId) {
+        const index = this.state.visible.indexOf(documentId);
+        if (index === -1)
+            this.setState({ visible: [documentId].concat(this.state.visible) });
+        else
+            this.setState({ visible: removeAt(this.state.visible, index) });
+    },
+
     onShow(documentId) {
-        // todo: check currently visible?
-        this.setState({ visible: [documentId].concat(this.state.visible) });
+        const index = this.state.visible.indexOf(documentId);
+        if (index == -1)
+            this.setState({ visible: [documentId].concat(this.state.visible) });
+    },
+
+    onHideDocument(documentId) {
+        const index = this.state.visible.indexOf(documentId);
+        if (index > -1)
+            this.setState({ visible: removeAt(this.state.visible, index) });
     },
 
     onHide(index) {

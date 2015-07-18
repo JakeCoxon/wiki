@@ -1,4 +1,5 @@
 import Hoverboard from 'hoverboard'
+import removeAt from '../util/removeAt.js'
 
 export default Hoverboard({
 
@@ -11,26 +12,37 @@ export default Hoverboard({
     */
 
     getInitialState() {
-        return { root: undefined, subFolders: {}, subDocuments: {} }
+        return { root: undefined, folderTree: {}, documentTree: {} }
     },
 
-    onSetRoot(root) {
-        this.setState({root});
+    onSetData({ root, folderTree = {}, documentTree = {} }) {
+        this.setState({ root, folderTree, documentTree });
+    },
+
+    onRemoveDocument(documentId) {
+        const newDocumentTree = Object.assign({}, this.state.documentTree);
+        Object.keys(newDocumentTree).forEach(folderId => {
+            const index = newDocumentTree[folderId].indexOf(documentId);
+            if (index > -1) {
+                newDocumentTree[folderId] = removeAt(newDocumentTree[folderId], index);
+            }
+        })
+        this.setState({ documents: newDocumentTree });
     },
 
     onAddFolderChild(folderId, childFolder) {
-        const newSubFolders = Object.assign({}, this.state.subFolders);
-        const newChildren = (newSubFolders[folderId] || []).concat([childFolder]);
-        newSubFolders[folderId] = newChildren;
+        const newfolderTree = Object.assign({}, this.state.folderTree);
+        const newChildren = (newfolderTree[folderId] || []).concat([childFolder]);
+        newfolderTree[folderId] = newChildren;
         
-        this.setState({ subFolders: newSubFolders });
+        this.setState({ folderTree: newSubFolders });
     },
 
     onAddDocumentChild(folderId, documentId) {
-        const newSubDocuments = Object.assign({}, this.state.subDocuments);
-        const newChildren = (newSubDocuments[folderId] || []).concat([documentId]);
-        newSubDocuments[folderId] = newChildren;
+        const documentTree = Object.assign({}, this.state.documentTree);
+        const newChildren = (documentTree[folderId] || []).concat([documentId]);
+        documentTree[folderId] = newChildren;
 
-        this.setState({ subDocuments: newSubDocuments });
+        this.setState({ documentTree: documentTree });
     }
 })

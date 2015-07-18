@@ -1,83 +1,58 @@
+require('object.assign').shim();
+
 import React from 'react'
 import Hoverboard from 'hoverboard'
 import removeAt from './util/removeAt.js'
 
 import AllDocsPanel from './views/all-docs-panel.js'
-import TreePanel from './views/tree-panel.js'
+import TreeView from './views/tree-view.js'
 import VisiblePanel from './views/visible-panel.js'
-import FileView from './views/file-view.js'
+import FileMenuView from './views/file-menu-view.js'
 
 import DocStore from './stores/doc-store.js'
 import TreeStore from './stores/tree-store.js'
+import FileStore from './stores/file-store.js'
 
 import GoogleDriveService from './services/google-drive-service.js'
-import FileLoadingStore from './stores/file-loading-store.js'
-import FileSavingStore from './stores/file-saving-store.js'
+import DocumentService from './services/document-service.js'
+import FileSavingService from './services/file-saving-service.js'
 
-
-require('object.assign').shim();
 
 
 window.addEventListener('load', load);
 
 
 
-
-
-var docId = 0;
-function Doc(id, title, body) {
-    return { id, title, body }
-}
-
-var folderId = 0;
-function Folder(id, name) {
-    return { id, name }
-}
-
-const a = Doc(docId++, "example 1", "THis is some stuff about stuff");
-const b = Doc(docId++, "example 2", "THis is some stuff about stuff");
-const c = Doc(docId++, "example 3", "THis is some stuff about stuff");
-const d = Doc(docId++, "example 4", "THis is some stuff about stuff");
-
-DocStore.insert(a);
-DocStore.insert(b);
-DocStore.insert(c);
-DocStore.insert(d);
-
-const root = Folder(folderId++, "root");
-const folder1 = Folder(folderId++, "asd");
-const folder2 = Folder(folderId++, "stuff");
-const folder3 = Folder(folderId++, "sub folder");
-
-TreeStore.setRoot(root)
-
-TreeStore.addFolderChild(root.id, folder1)
-TreeStore.addFolderChild(root.id, folder2)
-TreeStore.addFolderChild(folder1.id, folder3)
-
-TreeStore.addDocumentChild(folder1.id, a.id)
-TreeStore.addDocumentChild(folder1.id, b.id)
-TreeStore.addDocumentChild(folder2.id, c.id)
-TreeStore.addDocumentChild(folder3.id, d.id)
-
-
-
-
 function load() {
+
+
+    GoogleDriveService.init();
+    DocumentService.init();
+    FileSavingService.init();
     
-    FileLoadingStore.getState(state => {
+    FileStore.getState(state => {
         if (state.content) {
-            console.log(state.content.documents);
-            DocStore.setDocuments(state.content.documents);
+            console.log("Loaded File");
+            console.log("File content", state.content);
+            DocStore.setData(state.content);
+            TreeStore.setData(state.content);
         }
     });
 
+    FileStore.loadFile();
+
     const root = (
         <div>
-            <FileView />
-            <AllDocsPanel />
-            <TreePanel />
-            <VisiblePanel />
+            <div className="layout">
+                <div className="layout-main">
+                    <VisiblePanel />
+                </div>
+                <div className="layout-nav">
+                    <FileMenuView />
+                    {/*<AllDocsPanel />*/}
+                    <TreeView folderId="root" />
+                </div>
+            </div>
         </div>
     );
 

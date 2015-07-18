@@ -10,15 +10,14 @@ export default React.createClass({
     componentWillMount() {
 
         DocStore.getState(state => {
-            console.log(state);
             this.setState({ documents: state.documents })
         });
     },
 
     render() {
-        const allDocs = Object.keys(this.state.documents).map(key => {
-            const a = this.state.documents[key];
-            return <div>{a.title}</div>;
+        const allDocs = Object.keys(this.state.documents).map(docId => {
+            const { title } = this.state.documents[docId];
+            return <div key={docId}>{ title }</div>;
         });
 
         return <div>{allDocs}</div>;
