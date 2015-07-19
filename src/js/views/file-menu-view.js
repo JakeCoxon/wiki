@@ -29,12 +29,12 @@ const TreeView = React.createClass({
         return (
             <div>
 
-                <button onClick={this.onLoadExample}>Ex.</button>
-                <button onClick={this.pickFile}>Load</button>
+                <button onClick={this.onLoadExample}>Ex.</button><br />
+                <button onClick={this.pickFile}>Load</button><br />
                 { this.state.title ? 
                     <span>
-                        <button onClick={this.saveFile}>Save</button> 
-                        {this.state.title}
+                        <button onClick={this.saveFile}>Save</button> <br />
+                        Loaded: {this.state.title}
                     </span>
                     : undefined }
                 

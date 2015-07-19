@@ -16,7 +16,7 @@ const service = {
     },
 
     newDocument(folderId, autoShow) {
-        const newDoc = { id: this.getFreshId(), title: "ex title", body: "" };
+        const newDoc = { id: this.getFreshId(), title: "untitled", body: "" };
         DocStore.insert(newDoc);
         TreeStore.addDocumentChild(folderId, newDoc.id);
         if (autoShow) VisibleStore.show(newDoc.id);

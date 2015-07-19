@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Helvetica;
     background-color: #333;
@@ -21,6 +25,12 @@ body {
     flex: 1;
 }
 
+
+.navigationview {
+}
+.navigationview-menu {
+    margin: 0 0 20px 0;
+}
 
 
 .doclink {
@@ -133,4 +143,65 @@ body {
     width: 40px;
     height: 22px;
     margin: 4px 0px;
+}
+
+.iconbutton {
+    padding: 10px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+.iconbutton.is-active, .iconbutton.is-active:hover {
+    background: #333;
+    cursor: default;
+}
+.iconbutton:hover {
+    background: #444;
+}
+
+.modal {
+    z-index: 100;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.modal-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.modal-inner {
+    position: relative;
+    top: 20px;
+    width: 50%;
+    left: 0;
+    margin: auto;
+}
+
+
+.commandpalette {
+    background: #333;
+    box-shadow: 0 0 16px rgba(0,0,0,0.3);
+}
+.commandpalette-input {
+    background: black;
+    border: none;
+    color: #ccc;
+    padding: 5px;
+    width: 100%;
+}
+.commandpalette-input:focus {
+    outline: none;
+}
+.commandpalette-command {
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+}
+.commandpalette-command.is-selected {
+    background: rgba(255,255,255,0.3);
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import CommandStore from '../stores/command-store.js'
 
 export default React.createClass({
 
@@ -31,6 +32,15 @@ export default React.createClass({
         this.setState({ editingTitle: event.target.value });
     },
 
+    onMore(ev) {
+        CommandStore.show([
+            { label: "Delete", callback: this.onDelete }, 
+            { label: "Duplicate", callback: () => null }, 
+            { label: "Revert changes", callback: this.onCancel },
+            { label: "Save changes", callback: this.onDone },
+        ], ev.currentTarget);
+    },
+
     render() {
         if (this.state.editing) return this.renderEditing();
 
@@ -43,8 +53,8 @@ export default React.createClass({
                         <div className="docview-menu-title-text">{ title }</div>
                     </div>
                     <div className="docview-menu-right">
-                        <button className="button" onClick={ this.onEdit }>Edit</button>
-                        <button className="button" onClick={ this.props.onClose }>Close</button>
+                        <div className="iconbutton" onClick={ this.onEdit }><i className="fa fa-pencil"></i></div>
+                        <div className="iconbutton" onClick={ this.props.onClose }><i className="fa fa-close"></i></div>
                     </div>
                 </div>
                 <div className="docview-body">{ body }</div>
@@ -64,9 +74,8 @@ export default React.createClass({
                         <input className="docview-menu-title-input" type="text" value={ editingTitle } onChange={this.onTitleChange} />
                     </div>
                     <div className="docview-menu-right">
-                        <button className="button" onClick={ this.onDelete }>Delete</button>
-                        <button className="button" onClick={ this.onCancel }>Cancel</button>
-                        <button className="button" onClick={ this.onDone }>Done</button>
+                        <div className="iconbutton" onClick={ this.onMore }><i className="fa fa-ellipsis-h"></i></div>
+                        <div className="iconbutton" onClick={ this.onDone }><i className="fa fa-check"></i></div>
                     </div>
                 </div>
                 <div>
