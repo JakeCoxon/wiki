@@ -68,7 +68,7 @@ export default React.createClass({
         const { editingBody, editingTitle } = this.state;
 
         return (
-            <div className="docview">
+            <div className="docview is-editing">
                 <div className="docview-menu">
                     <div className="docview-menu-title">
                         <input className="docview-menu-title-input" type="text" value={ editingTitle } onChange={this.onTitleChange} />

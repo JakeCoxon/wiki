@@ -1,7 +1,8 @@
 import React from 'react'
-import AllDocsPanel from '../views/all-docs-panel.js'
+import VisibleDocsPanel from '../views/visible-docs-panel.js'
 import FileMenuView from '../views/file-menu-view.js'
 import TreeView from '../views/tree-view.js'
+import cx from '../util/mergeClasses.js'
 
 const TabView = React.createClass({
     getInitialState() {
@@ -33,7 +34,7 @@ const NavigationView = React.createClass({
                 { ({ tabIndex, onChangeTab }) => {
                     const menuButton = (icon, index) =>
                         <a onClick={onChangeTab(index)} 
-                           className={`iconbutton ${tabIndex === index ? "is-active" : ""}`}>
+                           className={cx("iconbutton", tabIndex === index && "is-active")}>
                               <i className={`fa ${icon}`}></i>
                         </a>
 
@@ -46,7 +47,7 @@ const NavigationView = React.createClass({
                                   menuButton('fa-cog', 3)]}
                             </div>
                             {(tabIndex === 0) ? <TreeView folderId="root" /> :
-                             (tabIndex === 1) ? <AllDocsPanel /> :
+                             (tabIndex === 1) ? <VisibleDocsPanel /> :
                              (tabIndex === 2) ? <FileMenuView /> : null}
                         </div>
                     );

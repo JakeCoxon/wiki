@@ -28,7 +28,7 @@ const TreeView = React.createClass({
         const folderDivs = folderTree.map(subFolder => {
             return (
                 <div>
-                    <div className="treeview-folder">{subFolder.name}</div>
+                    <div className="listitem"><div className="treeview-folder">{subFolder.name}</div></div>
                     <div className="treeview-children">
                         <TreeView key={subFolder.id} folderId={subFolder.id} />
                     </div>
@@ -40,8 +40,8 @@ const TreeView = React.createClass({
             if (!doc) return;
             return (
                 <div className="treeview-document" key={docId}>
-                    <div className="doclink" onClick={this.onShow(docId)}>
-                        {doc.title}
+                    <div className="listitem" onClick={this.onShow(docId)}>
+                        <div className="doclink">{doc.title}</div>
                     </div>
                 </div>
             );

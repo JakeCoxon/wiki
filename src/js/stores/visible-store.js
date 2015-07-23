@@ -8,6 +8,7 @@ export default Hoverboard({
     },
 
     onToggle(documentId) {
+        documentId = Number(documentId);
         const index = this.state.visible.indexOf(documentId);
         if (index === -1)
             this.setState({ visible: [documentId].concat(this.state.visible) });
@@ -16,12 +17,14 @@ export default Hoverboard({
     },
 
     onShow(documentId) {
+        documentId = Number(documentId);
         const index = this.state.visible.indexOf(documentId);
         if (index == -1)
             this.setState({ visible: [documentId].concat(this.state.visible) });
     },
 
     onHideDocument(documentId) {
+        documentId = Number(documentId);
         const index = this.state.visible.indexOf(documentId);
         if (index > -1)
             this.setState({ visible: removeAt(this.state.visible, index) });

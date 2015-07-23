@@ -45,17 +45,19 @@ body {
 }
 
 
+.listitem {
+    line-height: 1.7;
+}
+
 
 .treeview {
 
 }
 .treeview-folder {
     font-weight: bold;
-    line-height: 1.7;
     color: rgba(204, 204, 204, 0.9);
 }
 .treeview-document  {
-    line-height: 1.7;
     color: rgba(204, 204, 204, 0.54);
 }
 .treeview-children {
@@ -71,6 +73,11 @@ body {
     max-width: 600px;
     margin: 0 auto 50px auto;
     box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+.docview.is-editing {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 20px 2px rgba(0,0,0,0.1);
 }
 .docview-menu {
     display: flex;
@@ -115,7 +122,7 @@ body {
 
 .docview-bodyedit {
     width: 100%;
-    min-height: 300px;
+    min-height: 100px;
     font-family: georgia;
     font-size: 17px;
     padding: 18px;
