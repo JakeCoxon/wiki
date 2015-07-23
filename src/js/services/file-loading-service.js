@@ -1,6 +1,7 @@
 
 import GoogleDriveService from '../services/google-drive-service.js'
 import FileStore from '../stores/file-store.js'
+import VisibleStore from '../stores/visible-store.js'
 
 const service = {
 
@@ -12,17 +13,21 @@ const service = {
 
     },
 
-    pickFile() {
-        return GoogleDriveService.pick()
-                .then(data => FileStore.fileHasLoaded(data))
-                .catch(error => console.error(error));
+    loadData(data) {
+        return Promise.resolve(data)
+            .then(data => FileStore.fileHasLoaded(data))
+            .then(() => VisibleStore.hideAll())
+            .catch(error => console.error(error));
     },
+
+    pickFile() {
+        return this.loadData(GoogleDriveService.pick());
+    },
+
 
     
     loadFile(fileId) {
-        return GoogleDriveService.load(fileId)
-            .then(data => FileStore.fileHasLoaded(data))
-            .catch(error => console.error(error));
+        return this.loadData(GoogleDriveService.load(fileId));
     },
 
     loadDebug() {
@@ -66,13 +71,14 @@ const service = {
                 }
             };
 
-        FileStore.fileHasLoaded({ 
+        const fileData = { 
             id: "0B46NEfAjL1wPR0lOZ0RjaFA2LUk",
             title: "Example",
             content: content
-        })
+        };
 
-        return Promise.all(true)
+
+        return this.loadData(fileData);
 
     }
 

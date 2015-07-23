@@ -28,16 +28,16 @@ const FileMenuViewUnderlying = React.createClass({
 
         return (
             <div>
+                { this.props.title && ( 
+                    <span>
+                        Loaded: {this.props.title}
+                    </span>
+                )}
                 {this.props.history.map(({ fileId, title }) =>
                     <div><button onClick={this.onLoadFile(fileId)}>{ title }</button><br /></div>
                 )}
                 <button onClick={this.onLoadDebug}>Load Debug File</button><br />
                 <button onClick={this.pickFile}>Load from Google Drive</button><br />
-                { this.props.title ? 
-                    <span>
-                        Loaded: {this.props.title}
-                    </span>
-                    : undefined }
                 
             </div>
         );
