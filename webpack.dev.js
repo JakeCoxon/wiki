@@ -19,7 +19,7 @@ module.exports = {
                 exclude: /node_modules/, 
                 loader: "babel-loader",
                 query: {
-                   stage: 1
+                   stage: 0
                 }
             },
             // { test: /\.(png|jpg|svg)$/, loader: 'url-loader?name=images/[name].[ext]&limit=100' }

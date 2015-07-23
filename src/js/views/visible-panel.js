@@ -7,22 +7,10 @@ import VisibleStore from '../stores/visible-store.js'
 import DocumentService from '../services/document-service.js'
 import DocView from '../views/doc-view.js'
 
+import storeWrapper from '../util/store-wrapper.js'
 
 
-export default React.createClass({
-
-    getInitialState() {
-        return { documents: {}, visible: [] };
-    },
-
-    componentWillMount() {
-        DocStore.getState(state => {
-            this.setState({ documents: state.documents })
-        });
-        VisibleStore.getState(state => {
-            this.setState({ visible: state.visible })
-        });
-    },
+const VisiblePanelUnderlying = React.createClass({
 
     onClose(visibleId) {
         return () => VisibleStore.hide(visibleId);
@@ -38,8 +26,8 @@ export default React.createClass({
 
     getEndValue() {
         const obj = {};
-        this.state.visible.forEach((documentId, visibleId) => {
-            const document = this.state.documents[documentId];
+        this.props.visible.forEach((documentId, visibleId) => {
+            const document = this.props.documents[documentId];
             obj[`doc:${documentId}`] = {
                 spring: { val: 1 },
                 document: document, 
@@ -50,7 +38,6 @@ export default React.createClass({
     },
 
     willEnter(key) {
-        // const document = this.state.documents[key];
         return {
             spring: { val: 0 },
             document: {
@@ -128,3 +115,7 @@ export default React.createClass({
         );
     }
 });
+
+const VisiblePanel = storeWrapper([DocStore, VisibleStore])(VisiblePanelUnderlying);
+
+export default VisiblePanel;

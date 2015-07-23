@@ -47,12 +47,12 @@ export default Hoverboard({
                 "documents":{
                    "0":{
                       "id":0,
-                      "title":"example 1",
+                      "title":"Example 1",
                       "body":"This is some really kick ass stuff"
                    },
                    "1":{
                       "id":1,
-                      "title":"example 2",
+                      "title":"Example 2",
                       "body":"THis is some stuff about stuff"
                    },
                    "2":{
@@ -62,32 +62,23 @@ export default Hoverboard({
                    },
                    "3":{
                       "id":3,
-                      "title":"example 4",
+                      "title":"Untitled 1",
+                      "body":"THis is some stuff about stuff"
+                   },
+                   "4":{
+                      "id":4,
+                      "title":"Untitled 2",
+                      "body":"THis is some stuff about stuff"
+                   },
+                   "5":{
+                      "id":5,
+                      "title":"Untitled 3",
                       "body":"THis is some stuff about stuff"
                    }
                 },
-                "folderTree":{
-                   "root":[
-                      {
-                         "id":1,
-                         "name":"asd"
-                      },
-                      {
-                         "id":2,
-                         "name":"stuff"
-                      }
-                   ],
-                   "1":[
-                      {
-                         "id":3,
-                         "name":"sub folder"
-                      }
-                   ]
-                },
                 "documentTree":{
-                   "root":[2],
-                   "1":[0,1],
-                   "3":[3]
+                   "root":[0,1,2],
+                   "1":[3,4,5],
                 }
             };
 
@@ -96,9 +87,7 @@ export default Hoverboard({
                 fileId: this.state.fileId,
                 title: "Example",
                 content: {
-                    root: content.root,
                     documents: content.documents,
-                    folderTree: content.folderTree,
                     documentTree: content.documentTree,
                 },
                 error: null 

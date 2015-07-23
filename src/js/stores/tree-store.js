@@ -6,17 +6,16 @@ export default Hoverboard({
 
     /*
     const tree = {
-        subFolders: {[root.id]: [folder1, folder2], [folder1.id]: [folder3]},
-        subDocuments: {[folder1.id]: [a.id, b.id], [folder2.id]: [c.id]}
+        documentTree: {[folder1.id]: [a.id, b.id], [folder2.id]: [c.id]}
     };
     */
 
     getInitialState() {
-        return { root: undefined, folderTree: {}, documentTree: {} }
+        return { documentTree: {} }
     },
 
-    onSetData({ root, folderTree = {}, documentTree = {} }) {
-        this.setState({ root, folderTree, documentTree });
+    onSetData({ documentTree = {} }) {
+        this.setState({ documentTree });
     },
 
     onRemoveDocument(documentId) {
@@ -28,14 +27,6 @@ export default Hoverboard({
             }
         })
         this.setState({ documents: newDocumentTree });
-    },
-
-    onAddFolderChild(folderId, childFolder) {
-        const newfolderTree = Object.assign({}, this.state.folderTree);
-        const newChildren = (newfolderTree[folderId] || []).concat([childFolder]);
-        newfolderTree[folderId] = newChildren;
-        
-        this.setState({ folderTree: newSubFolders });
     },
 
     onAddDocumentChild(folderId, documentId) {

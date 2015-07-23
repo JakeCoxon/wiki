@@ -1,21 +1,27 @@
 import React from "react";
  
-export default Store => ComposedComponent => React.createClass({
+export default stores => Underlying => {
+    const Class = React.createClass({
 
-    getInitialState() {
-        return Store.getState();
-    },
+        getInitialState() {
+            return stores.reduce((r, s) => Object.assign(r, s.getState()), {});
+        },
 
-    componentDidMount() {
-        this.unsubscribe = Store.getState(state => this.setState(state));
-    },
+        componentDidMount() {
+            this.unsubscribes = stores.map(store => store.getState(state => this.setState(state)));
+        },
 
-    componentWillUnmount() {
-        this.unsubscribe();
-    },
-  
-    render() {
-        return <ComposedComponent {...this.props} {...this.state} />;
-    }
+        componentWillUnmount() {
+            this.unsubscribes.forEach(f => f());
+        },
+      
+        render() {
+            return <Underlying {...this.props} {...this.state} />;
+        }
+    });
 
-});
+    Class.underling = Underlying;
+
+    return Class;
+
+};

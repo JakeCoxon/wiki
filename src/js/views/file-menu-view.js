@@ -1,13 +1,9 @@
 import React from 'react'
 import FileStore from '../stores/file-store.js'
 import FileSavingService from '../services/file-saving-service.js'
+import storeWrapper from '../util/store-wrapper.js'
 
-const TreeView = React.createClass({
-    componentWillMount() {
-        FileStore.getState(state =>
-            this.setState({ title: state.title }));
-
-    },
+const FileMenuViewUnderlying = React.createClass({
 
 
     pickFile() {
@@ -15,7 +11,7 @@ const TreeView = React.createClass({
     },
 
     saveFile() {
-        if (this.state.title) {
+        if (this.props.title) {
             FileSavingService.saveFile();
         }
     },
@@ -31,10 +27,10 @@ const TreeView = React.createClass({
 
                 <button onClick={this.onLoadExample}>Ex.</button><br />
                 <button onClick={this.pickFile}>Load</button><br />
-                { this.state.title ? 
+                { this.props.title ? 
                     <span>
                         <button onClick={this.saveFile}>Save</button> <br />
-                        Loaded: {this.state.title}
+                        Loaded: {this.props.title}
                     </span>
                     : undefined }
                 
@@ -44,4 +40,6 @@ const TreeView = React.createClass({
     }
 });
 
-export default TreeView;
+const FileMenuView = storeWrapper([FileStore])(FileMenuViewUnderlying);
+
+export default FileMenuView;

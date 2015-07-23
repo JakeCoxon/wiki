@@ -129,7 +129,7 @@ const CommandView = React.createClass({
 const CommandViewAdapter = CommandView.Adapter = React.createClass({
     render() {
         return (
-            <StoreAdapter store={CommandStore}>
+            <StoreAdapter stores={[CommandStore]}>
                 {state =>
                     <div>
                         {state.commands.length > 0 && <CommandView commands={state.commands} targetRect={state.targetRect} />}

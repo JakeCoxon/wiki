@@ -2,28 +2,11 @@ import React from 'react'
 import VisibleDocsPanel from '../views/visible-docs-panel.js'
 import FileMenuView from '../views/file-menu-view.js'
 import TreeView from '../views/tree-view.js'
+import TabView from '../views/tab-view.js'
+
 import cx from '../util/mergeClasses.js'
 
-const TabView = React.createClass({
-    getInitialState() {
-        return { tabIndex: 0 };
-    },
 
-    onChangeTab(index) {
-        return () => this.setState({ tabIndex: index });
-    },
-
-    render() {
-        return (
-            <div>
-                {this.props.children({ 
-                    tabIndex: this.state.tabIndex, 
-                    onChangeTab: this.onChangeTab
-                })}
-            </div>
-        );
-    }
-});
 
 const NavigationView = React.createClass({
     render() {

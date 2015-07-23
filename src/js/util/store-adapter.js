@@ -3,11 +3,11 @@ import React from 'react'
 const StoreAdapter = React.createClass({
 
     componentDidMount() {
-        this.unsubscribe = this.props.store.getState(state => this.setState(state));
+        this.unsubscribes = this.props.stores.map(store => store.getState(state => this.setState(state)));
     },
 
     componentWillUnmount() {
-        this.unsubscribe();
+        this.unsubscribes.forEach(f => f());
     },
 
     render() {
