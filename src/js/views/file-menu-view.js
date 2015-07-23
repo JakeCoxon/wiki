@@ -1,35 +1,40 @@
 import React from 'react'
 import FileStore from '../stores/file-store.js'
-import FileSavingService from '../services/file-saving-service.js'
+import FileLoadingService from '../services/file-loading-service.js'
+import FileHistoryStore from '../stores/file-history-store.js'
 import storeWrapper from '../util/store-wrapper.js'
 
 const FileMenuViewUnderlying = React.createClass({
 
 
     pickFile() {
-        FileStore.pickFile();
+        FileLoadingService.pickFile();
     },
 
-    saveFile() {
-        if (this.props.title) {
-            FileSavingService.saveFile();
+    onLoadDebug() {
+        const loaded = FileLoadingService.loadDebug();
+        this.props.onDone && loaded.then(this.props.onDone);
+    },
+
+    onLoadFile(fileId) {
+        return () => {
+            const loaded = FileLoadingService.loadFile(fileId);
+            console.log(loaded);
+            this.props.onDone && loaded.then(this.props.onDone);
         }
-    },
-
-    onLoadExample() {
-        FileStore.loadExample();
     },
 
     render() {
 
         return (
             <div>
-
-                <button onClick={this.onLoadExample}>Ex.</button><br />
-                <button onClick={this.pickFile}>Load</button><br />
+                {this.props.history.map(({ fileId, title }) =>
+                    <div><button onClick={this.onLoadFile(fileId)}>{ title }</button><br /></div>
+                )}
+                <button onClick={this.onLoadDebug}>Load Debug File</button><br />
+                <button onClick={this.pickFile}>Load from Google Drive</button><br />
                 { this.props.title ? 
                     <span>
-                        <button onClick={this.saveFile}>Save</button> <br />
                         Loaded: {this.props.title}
                     </span>
                     : undefined }
@@ -40,6 +45,6 @@ const FileMenuViewUnderlying = React.createClass({
     }
 });
 
-const FileMenuView = storeWrapper([FileStore])(FileMenuViewUnderlying);
+const FileMenuView = storeWrapper([FileStore, FileHistoryStore])(FileMenuViewUnderlying);
 
 export default FileMenuView;

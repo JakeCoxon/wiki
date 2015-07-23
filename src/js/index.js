@@ -17,6 +17,7 @@ import CommandStore from './stores/command-store.js'
 import GoogleDriveService from './services/google-drive-service.js'
 import DocumentService from './services/document-service.js'
 import FileSavingService from './services/file-saving-service.js'
+import AutoSaveService from './services/auto-save-service.js'
 
 
 
@@ -30,17 +31,21 @@ function load() {
     GoogleDriveService.init();
     DocumentService.init();
     FileSavingService.init();
+    AutoSaveService.init();
     
     FileStore.getState(state => {
         if (state.content) {
-            console.log("Loaded File");
-            console.log("File content", state.content);
-            DocStore.setData(state.content);
-            TreeStore.setData(state.content);
+            setTimeout(() => {
+
+                console.log("Loaded File");
+                console.log("File content", state.content);
+                DocStore.setData(state.content);
+                TreeStore.setData(state.content);
+
+            }, 10);
+
         }
     });
-
-    FileStore.loadFile();
 
     const root = (
         <div>

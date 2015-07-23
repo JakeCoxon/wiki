@@ -12,6 +12,10 @@ const VisibleDocsPanelUnderlying = React.createClass({
 
     },
 
+    closeAll() {
+        VisibleStore.hideAll();
+    },
+
     render() {
 
         const allDocs = this.props.visible.map(docId => {
@@ -25,7 +29,16 @@ const VisibleDocsPanelUnderlying = React.createClass({
             );
         });
 
-        return <div>{allDocs}</div>;
+        return (
+            <div>
+            {allDocs}
+            {this.props.visible.length > 0 && (
+                <div className="listitem" onClick={this.closeAll} style={{ marginTop: 15 }}>
+                    <div className="doclink">Close all</div>
+                </div>
+            )}
+            </div>
+        );
     }
 });
 

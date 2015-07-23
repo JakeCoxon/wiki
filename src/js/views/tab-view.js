@@ -2,7 +2,7 @@ import React from 'react'
 
 const TabView = React.createClass({
     getInitialState() {
-        return { tabIndex: 0 };
+        return { tabIndex: this.props.initialTabIndex || 0 };
     },
 
     onChangeTab(index) {

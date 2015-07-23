@@ -13,7 +13,7 @@ const NavigationView = React.createClass({
 
 
         return (
-            <TabView>
+            <TabView initialTabIndex={2}>
                 { ({ tabIndex, onChangeTab }) => {
                     const menuButton = (icon, index) =>
                         <a onClick={onChangeTab(index)} 
@@ -31,7 +31,7 @@ const NavigationView = React.createClass({
                             </div>
                             {(tabIndex === 0) ? <TreeView folderId="root" /> :
                              (tabIndex === 1) ? <VisibleDocsPanel /> :
-                             (tabIndex === 2) ? <FileMenuView /> : null}
+                             (tabIndex === 2) ? <FileMenuView onDone={onChangeTab(0)}/> : null}
                         </div>
                     );
                 } }
