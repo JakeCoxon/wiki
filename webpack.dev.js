@@ -19,7 +19,8 @@ module.exports = {
                 exclude: /node_modules/, 
                 loader: "babel-loader",
                 query: {
-                   stage: 0
+                   presets: ['es2015', 'stage-1', 'react'],
+                   plugins: []
                 }
             },
             // { test: /\.(png|jpg|svg)$/, loader: 'url-loader?name=images/[name].[ext]&limit=100' }
