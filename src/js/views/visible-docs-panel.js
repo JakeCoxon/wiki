@@ -1,19 +1,16 @@
 import React from 'react'
-import Hoverboard from 'hoverboard'
-import DocStore from '../stores/doc-store.js'
-import VisibleStore from '../stores/visible-store.js'
-import storeWrapper from '../util/store-wrapper.js'
+import { connect } from 'react-redux'
 
 const VisibleDocsPanelUnderlying = React.createClass({
 
     onToggle(documentId) {
 
-        return () => VisibleStore.toggle(documentId);
+        return () => this.props.dispatch({ type: "VISIBLE/TOGGLE", documentId });
 
     },
 
     closeAll() {
-        VisibleStore.hideAll();
+        this.props.dispatch({ type: "VISIBLE/HIDE_ALL" });
     },
 
     render() {
@@ -42,6 +39,11 @@ const VisibleDocsPanelUnderlying = React.createClass({
     }
 });
 
-const VisibleDocsPanel = storeWrapper([DocStore, VisibleStore])(VisibleDocsPanelUnderlying);
+const mapStateToProps = (state) => ({
+    visible: state.visible,
+    documents: state.documents
+})
+const VisibleDocsPanel = connect(mapStateToProps)(VisibleDocsPanelUnderlying);
+
 
 export default VisibleDocsPanel;

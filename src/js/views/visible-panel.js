@@ -1,27 +1,22 @@
 import React from 'react'
 import { TransitionMotion, spring } from 'react-motion'
 
-import DocStore from '../stores/doc-store.js'
-import VisibleStore from '../stores/visible-store.js'
-
-import DocumentService from '../services/document-service.js'
 import DocView from '../views/doc-view.js'
 
-import storeWrapper from '../util/store-wrapper.js'
-
+import { connect } from 'react-redux'
 
 const VisiblePanelUnderlying = React.createClass({
 
     onClose(visibleId) {
-        return () => VisibleStore.hide(visibleId);
+        return () => this.props.dispatch({ type: "VISIBLE/HIDE_INDEX", index: visibleId });
     },
 
-    onDelete(documentId) {
-        return () => DocumentService.deleteDocument(documentId);
+    onDelete(id) {
+        return () => this.props.dispatch({ type: "DOC/REMOVE", id });
     },
 
     onDone(id) {
-        return ({ title, body }) => DocStore.updateDocument(id, { title, body });
+        return ({ title, body }) => this.props.dispatch({ type: "DOC/UPDATE", id, title, body });
     },
 
     getEndValue() {
@@ -117,6 +112,11 @@ const VisiblePanelUnderlying = React.createClass({
     }
 });
 
-const VisiblePanel = storeWrapper([DocStore, VisibleStore])(VisiblePanelUnderlying);
+const mapStateToProps = (state) => ({
+    visible: state.visible,
+    documents: state.documents
+})
+const VisiblePanel = connect(mapStateToProps)(VisiblePanelUnderlying);
+
 
 export default VisiblePanel;

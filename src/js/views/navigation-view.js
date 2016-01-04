@@ -16,7 +16,7 @@ const NavigationView = React.createClass({
             <TabView initialTabIndex={2}>
                 { ({ tabIndex, onChangeTab }) => {
                     const menuButton = (icon, index) =>
-                        <a onClick={onChangeTab(index)} 
+                        <a key={index} onClick={onChangeTab(index)} 
                            className={cx("iconbutton", tabIndex === index && "is-active")}>
                               <i className={`fa ${icon}`}></i>
                         </a>
@@ -24,10 +24,13 @@ const NavigationView = React.createClass({
                     return (
                         <div className="navigationview">
                             <div className="navigationview-menu">
-                                {[menuButton('fa-building', 0), 
-                                  menuButton('fa-list', 1), 
-                                  menuButton('fa-cloud', 2), 
-                                  menuButton('fa-cog', 3)]}
+                                <div>
+                                  {[menuButton('fa-building', 0), 
+                                    menuButton('fa-list', 1), 
+                                    menuButton('fa-cloud', 2), 
+                                    menuButton('fa-cog', 3)]}
+                                </div>
+                                <span className="navigationview-menu-label">{["All", "Visible", "Syncing", "Options"][tabIndex]}</span>
                             </div>
                             {(tabIndex === 0) ? <TreeView folderId="root" /> :
                              (tabIndex === 1) ? <VisibleDocsPanel /> :

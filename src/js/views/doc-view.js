@@ -1,5 +1,5 @@
 import React from 'react'
-import CommandStore from '../stores/command-store.js'
+// import CommandStore from '../stores/command-store.js'
 
 export default React.createClass({
 
@@ -33,12 +33,12 @@ export default React.createClass({
     },
 
     onMore(ev) {
-        CommandStore.show([
-            { label: "Delete", callback: this.onDelete }, 
-            { label: "Duplicate", callback: () => null }, 
-            { label: "Revert changes", callback: this.onCancel },
-            { label: "Save changes", callback: this.onDone },
-        ], ev.currentTarget);
+        // CommandStore.show([
+        //     { label: "Delete", callback: this.onDelete }, 
+        //     { label: "Duplicate", callback: () => null }, 
+        //     { label: "Revert changes", callback: this.onCancel },
+        //     { label: "Save changes", callback: this.onDone },
+        // ], ev.currentTarget);
     },
 
     render() {

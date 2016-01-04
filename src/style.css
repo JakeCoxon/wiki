@@ -27,9 +27,15 @@ body {
 
 
 .navigationview {
+    width: 140px;
 }
 .navigationview-menu {
-    margin: 0 0 20px 0;
+    margin: -10px -10px 20px -10px;
+}
+.navigationview-menu-label {
+    font-size: 10px;
+    color: #666;
+    margin-left: 10px;
 }
 
 

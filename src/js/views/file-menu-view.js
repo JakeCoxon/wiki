@@ -1,40 +1,45 @@
 import React from 'react'
-import FileStore from '../stores/file-store.js'
-import FileLoadingService from '../services/file-loading-service.js'
-import FileHistoryStore from '../stores/file-history-store.js'
-import storeWrapper from '../util/store-wrapper.js'
+import { connect } from 'react-redux'
+import { fileLoadData, filePick, fileLoadGoogleId, fileSave } from '../action-creators'
+
 
 const FileMenuViewUnderlying = React.createClass({
 
 
     pickFile() {
-        FileLoadingService.pickFile();
+        const loaded = this.props.dispatch(filePick());
+        this.props.onDone && loaded.then(this.props.onDone);
     },
 
     onLoadDebug() {
-        const loaded = FileLoadingService.loadDebug();
+        const fileData = require('../debug-data.js').debugFile;
+        const loaded = this.props.dispatch(fileLoadData(fileData));
         this.props.onDone && loaded.then(this.props.onDone);
     },
 
     onLoadFile(fileId) {
         return () => {
-            const loaded = FileLoadingService.loadFile(fileId);
-            console.log(loaded);
+            const loaded = this.props.dispatch(fileLoadGoogleId(fileId));
             this.props.onDone && loaded.then(this.props.onDone);
         }
+    },
+
+    onSave() {
+        this.props.dispatch(fileSave());
     },
 
     render() {
 
         return (
             <div>
-                { this.props.title && ( 
-                    <span>
-                        Loaded: {this.props.title}
-                    </span>
+                { this.props.loadedFile && ( 
+                    <div>
+                        <div>Loaded: {this.props.loadedFile.title}</div>
+                        <button onClick={this.onSave}>Save now</button><br />
+                    </div>
                 )}
                 {this.props.history.map(({ fileId, title }) =>
-                    <div><button onClick={this.onLoadFile(fileId)}>{ title }</button><br /></div>
+                    <div key={fileId}><button onClick={this.onLoadFile(fileId)}>{ title }</button><br /></div>
                 )}
                 <button onClick={this.onLoadDebug}>Load Debug File</button><br />
                 <button onClick={this.pickFile}>Load from Google Drive</button><br />
@@ -45,6 +50,11 @@ const FileMenuViewUnderlying = React.createClass({
     }
 });
 
-const FileMenuView = storeWrapper([FileStore, FileHistoryStore])(FileMenuViewUnderlying);
+const mapStateToProps = (state) => ({
+    loadedFile: state.file,
+    history: []
+})
+const FileMenuView = connect(mapStateToProps)(FileMenuViewUnderlying);
+
 
 export default FileMenuView;
