@@ -15,6 +15,9 @@
     "css-loader": "^0.23.1",
     "deepmerge": "^0.2.7",
     "extract-text-webpack-plugin": "^0.5.0",
+    "gulp": "^3.9.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-webpack": "^1.5.0",
     "marked": "^0.3.5",
     "object.assign": "^1.0.3",
     "react": "^0.14.5",
@@ -36,6 +39,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --config webpack.dev.js --content-base ./src/"
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --config webpack.dev.js --content-base ./src/",
+    "dist": "./node_modules/webpack/bin/webpack.js --config webpack.prod.js --content-base ./src/"
   }
 }
