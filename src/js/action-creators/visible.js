@@ -8,17 +8,17 @@ export function visibleShowAt(documentId, visibleId) {
     }
 }
 export function visibleHideIndex(visibleId) {
-    return { type: "VISIBLE/HIDE_INDEX", index: visibleId }
+    return { type: visibleConstants.HIDE_INDEX, index: visibleId }
 }
 
 export function visibleShow(documentId) {
-    return { type: "VISIBLE/SHOW", documentId };
+    return { type: visibleConstants.SHOW, documentId };
 }
 
 export function visibleToggle(documentId) {
-    return { type: "VISIBLE/TOGGLE", documentId };
+    return { type: visibleConstants.TOGGLE, documentId };
 }
 
 export function visibleHideAll() {
-    return { type: "VISIBLE/HIDE_ALL" };
+    return { type: visibleConstants.HIDE_ALL };
 }

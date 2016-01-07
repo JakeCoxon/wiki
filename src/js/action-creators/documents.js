@@ -23,11 +23,11 @@ export function documentInsert(id, title, body) {
 }
 
 export function documentRemove(id) {
-    return { type: "DOC/REMOVE", id }
+    return { type: documentsConstants.REMOVE, id }
 }
 
 export function documentUpdate(id, title, body) {
-    return { type: "DOC/UPDATE", id, title, body };
+    return { type: documentsConstants.UPDATE, id, title, body };
 }
 
 export function documentOpenLinkAfter(visibleId, documentTitle) {
