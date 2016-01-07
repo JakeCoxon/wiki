@@ -23,6 +23,7 @@ module.exports = {
                    plugins: []
                 }
             },
+            { test: /\.css$/, loader: "style-loader!css-loader" },
             // { test: /\.(png|jpg|svg)$/, loader: 'url-loader?name=images/[name].[ext]&limit=100' }
         ]
     },

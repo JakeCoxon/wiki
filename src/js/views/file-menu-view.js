@@ -35,14 +35,22 @@ const FileMenuViewUnderlying = React.createClass({
                 { this.props.loadedFile && ( 
                     <div>
                         <div>Loaded: {this.props.loadedFile.title}</div>
-                        <button onClick={this.onSave}>Save now</button><br />
+                        <button onClick={this.onSave}>Save now</button>
                     </div>
                 )}
-                {this.props.history.map(({ fileId, title }) =>
-                    <div key={fileId}><button onClick={this.onLoadFile(fileId)}>{ title }</button><br /></div>
-                )}
-                <button onClick={this.onLoadDebug}>Load Debug File</button><br />
-                <button onClick={this.pickFile}>Load from Google Drive</button><br />
+                {this.props.history && 
+                    <div style={{ marginTop: 20 }}>
+                        Recent files
+                        {this.props.history.map(({ fileId, title }) =>
+                            <div key={fileId}><button onClick={this.onLoadFile(fileId)}>{ title }</button></div>
+                        )}
+                    </div>
+                }
+                <div  style={{ marginTop: 20 }}>
+                    Load other
+                    <div><button onClick={this.onLoadDebug}>Load Debug File</button></div>
+                    <div><button onClick={this.pickFile}>Load from Google</button></div>
+                </div>
                 
             </div>
         );
@@ -52,7 +60,7 @@ const FileMenuViewUnderlying = React.createClass({
 
 const mapStateToProps = (state) => ({
     loadedFile: state.file,
-    history: []
+    history: state.fileHistory
 })
 const FileMenuView = connect(mapStateToProps)(FileMenuViewUnderlying);
 

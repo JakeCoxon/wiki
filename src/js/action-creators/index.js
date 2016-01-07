@@ -23,3 +23,26 @@ export function documentInsert(id, title, body) {
         body
     }
 }
+
+
+export function documentOpenLinkAfter(visibleId, documentTitle) {
+    documentTitle = documentTitle.toLowerCase();
+    return (dispatch, getState) => {
+        const { documents, visible } = getState();
+        let document = _.find(documents, (doc) => doc.title.toLowerCase() === documentTitle);
+
+        if (!document) {
+            document = dispatch(documentFreshInsert(documentTitle, ""));
+        }
+
+        dispatch(visibleAddAt(document.id, visibleId + 1))
+    }
+}
+
+export function visibleAddAt(documentId, visibleId) {
+    return {
+        type: "VISIBLE/SHOW_AT",
+        documentId,
+        visibleId
+    }
+}

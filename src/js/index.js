@@ -14,6 +14,8 @@ import reducer from './reducers/index.js'
 import { Provider } from 'react-redux'
 import { documentFreshInsert, fileLoadData, fileLoadSuccess } from './action-creators'
 
+require('codemirror/lib/codemirror.css');
+
 const logger = store => next => action => {
     console.groupCollapsed(action.type)
     console.info('dispatching', action)
@@ -25,7 +27,7 @@ const logger = store => next => action => {
     return result
 }
 
-const store = applyMiddleware(
+const store = window.store = applyMiddleware(
     require('redux-thunk'),
     logger
 )(createStore)(reducer);
@@ -33,6 +35,7 @@ const store = applyMiddleware(
 
 window.addEventListener('load', load);
 
+import Editor from './views/editor-view.js'
 
 function load() {
 
@@ -43,12 +46,15 @@ function load() {
     const promise = store.dispatch(fileLoadData(data));
 
     promise.then((data) => {
-        store.dispatch({ 
-            type: "VISIBLE/SHOW",
-            documentId: Object.keys(store.getState().documents)[0]
-        })
+        const allDocuments = store.getState().documents
+        const homeDoc = _.find(allDocuments, doc => doc.title.toLowerCase() == 'home');
+        if (homeDoc) {
+            store.dispatch({ 
+                type: "VISIBLE/SHOW",
+                documentId: homeDoc.id
+            })
+        }
     })
-
 
     const root = (
         <Provider store={store}>

@@ -30,9 +30,9 @@ const VisibleDocsPanelUnderlying = React.createClass({
             <div>
             {allDocs}
             {this.props.visible.length > 0 && (
-                <div className="listitem" onClick={this.closeAll} style={{ marginTop: 15 }}>
-                    <div className="doclink">Close all</div>
-                </div>
+                <button onClick={this.closeAll} style={{ marginTop: 15 }}>
+                    Close all
+                </button>
             )}
             </div>
         );

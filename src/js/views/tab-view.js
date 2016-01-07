@@ -5,8 +5,8 @@ const TabView = React.createClass({
         return { tabIndex: this.props.initialTabIndex || 0 };
     },
 
-    onChangeTab(index) {
-        return () => this.setState({ tabIndex: index });
+    changeTab(index) {
+        this.setState({ tabIndex: index });
     },
 
     render() {
@@ -14,7 +14,6 @@ const TabView = React.createClass({
             <div>
                 {this.props.children({ 
                     tabIndex: this.state.tabIndex, 
-                    onChangeTab: this.onChangeTab
                 })}
             </div>
         );

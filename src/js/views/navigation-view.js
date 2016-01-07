@@ -3,20 +3,26 @@ import VisibleDocsPanel from '../views/visible-docs-panel.js'
 import FileMenuView from '../views/file-menu-view.js'
 import TreeView from '../views/tree-view.js'
 import TabView from '../views/tab-view.js'
+import AllDocsView from '../views/all-docs-view.js'
 
 import cx from '../util/mergeClasses.js'
 
 
 
 const NavigationView = React.createClass({
+
+    changeTab(idx) {
+        this.refs.tabView.changeTab(idx);
+    },
+
     render() {
 
 
         return (
-            <TabView initialTabIndex={2}>
-                { ({ tabIndex, onChangeTab }) => {
+            <TabView initialTabIndex={0} ref="tabView">
+                { ({ tabIndex }) => {
                     const menuButton = (icon, index) =>
-                        <a key={index} onClick={onChangeTab(index)} 
+                        <a key={index} onClick={() => this.changeTab(index)} 
                            className={cx("iconbutton", tabIndex === index && "is-active")}>
                               <i className={`fa ${icon}`}></i>
                         </a>
@@ -30,11 +36,11 @@ const NavigationView = React.createClass({
                                     menuButton('fa-cloud', 2), 
                                     menuButton('fa-cog', 3)]}
                                 </div>
-                                <span className="navigationview-menu-label">{["All", "Visible", "Syncing", "Options"][tabIndex]}</span>
+                                <span className="navigationview-menu-label">{["All", "Opened", "Syncing Options", "Settings"][tabIndex]}</span>
                             </div>
-                            {(tabIndex === 0) ? <TreeView folderId="root" /> :
+                            {(tabIndex === 0) ? <AllDocsView /> :
                              (tabIndex === 1) ? <VisibleDocsPanel /> :
-                             (tabIndex === 2) ? <FileMenuView onDone={onChangeTab(0)}/> : null}
+                             (tabIndex === 2) ? <FileMenuView /> : null}
                         </div>
                     );
                 } }

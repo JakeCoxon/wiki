@@ -1,39 +1,24 @@
+
 const content = {
   "documents":{
      "0":{
         "id":0,
-        "title":"Example 1",
-        "body":"This is some really kick ass stuff"
+        "title":"Markdown example",
+        "body":"Look at this **bold** and *italic* styling. Soon there will be keyboard shortcuts.\n\n## Links\n\nYou can link to [external links](http://google.com). Or [internal ones](/Untitled 1). \n\nAlternative syntax is with wiki links:<br>`[[Lorem Ipsum]]` becomes [[Lorem Ipsum]]\n\n## Lists\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Unordered lists...\n* ...can be started by typing `*`\n* ...or `- `\n* ...or even `+ `\n\n#### Ordered\n1. Numbered lists...\n2. ...can be written with numbers\n\n## Images?\n![Yes](http://i.imgur.com/sZlktY7.png)"
      },
      "1":{
         "id":1,
-        "title":"Example 2",
-        "body":"THis is some stuff about stuff"
-     },
-     "2":{
-        "id":2,
-        "title":"I aint no example",
-        "body":"THis is some stuff about stuff"
-     },
-     "3":{
-        "id":3,
-        "title":"Untitled 1",
-        "body":"THis is some stuff about stuff"
+        "title":"Lorem Ipsum",
+        "body":"Lorem ipsum dolor sit amet, civibus adipisci erroribus eam ex, qui choro convenire id, sumo quando mel ad. Latine eligendi nam ad. Graeci cetero nonumes quo cu, quis falli vel ex. Porro elaboraret mea ne, sed te ullum simul timeam.\n\nAd vis soleat dolorum patrioque, at partem concludaturque mei, cu dolores iracundia eum. Nam et libris singulis praesent, explicari consetetur disputationi per et, assum urbanitas vis at. Eos no errem dolorum neglegentur. Dicam facilisi iudicabit id ius, no eam adhuc ullum.\n\nIllud augue ea qui. Harum nominavi et sed, dolore invidunt principes et cum, est ut quot noluisse. Has et ferri prodesset dissentiet, aeque semper deterruisset vel ea. Mediocrem sapientem at vel, quas praesent ne cum, ad nec errem noluisse."
      },
      "4":{
-        "id":4,
-        "title":"Untitled 2",
-        "body":"THis is some stuff about stuff"
+        "id":2,
+        "title":"Home",
+        "body":"This is the home page of **Jake's Unnamed Wiki App**\n\nIt is basically a massive rip of [TiddlyWiki](http://tiddlywiki.com/) but it saves everything as JSON in Google Drive so your data is available any where.\n\nCheck out some other pages\n\n- [Some jiberish](/Lorem Ipsum)\n- [[Markdown example]]"
      },
-     "5":{
-        "id":5,
-        "title":"Untitled 3",
-        "body":"THis is some stuff about stuff"
-     }
   },
   "documentTree":{
      "root":[0,1,2],
-     "1":[3,4,5],
   }
 };
 

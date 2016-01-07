@@ -34,7 +34,8 @@ export function fileLoadSuccess(fileData) {
 
     return (dispatch) => {
 
-        dispatch({ type: "FILE/LOAD_SUCCESS", fileId: id, title })
+        dispatch({ type: "FILE/LOAD_SUCCESS", fileId: id, title });
+        dispatch({ type: "FILE_HISTORY/ADD", fileId: id, title });
 
         dispatch({ type: "DOC/REMOVE_ALL" });
 
@@ -65,3 +66,4 @@ export function fileSave() {
         return GoogleDriveService.save(fileId, title, content);
     }
 }
+

@@ -82,6 +82,17 @@ function visibleReducer(state = [], action) {
             return [ documentId, ...state ];
     }
 
+    else if (action.type === "VISIBLE/SHOW_AT") {
+        const { documentId, visibleId } = action;
+        const index = state.indexOf(documentId);
+        if (index === -1)
+            return [
+                ..._.slice(state, 0, visibleId),
+                documentId,
+                ..._.slice(state, visibleId)
+            ];
+    }
+
     else if (action.type === "VISIBLE/HIDE") {
         const { documentId } = action;
         return state.filter(id => documentId != id);
@@ -120,12 +131,25 @@ function fileReducer(state = {}, action) {
 
 }
 
+function fileHistoryReducer(state = [], action) {
+
+    if (action.type === "FILE_HISTORY/ADD") {
+        const { fileId, title } = action;
+        const filteredHistory = state.filter(history => history.fileId !== fileId);
+        return [{ fileId, title }, ...filteredHistory];
+    }
+
+    return state;
+
+}
+
 export default function reducer(state = {}, action) {
     return { 
         documents: docReducer(state.documents, action),
         tree: treeReducer(state.tree, action),
         visible: visibleReducer(state.visible, action),
-        file: fileReducer(state.file, action)
+        file: fileReducer(state.file, action),
+        fileHistory: fileHistoryReducer(state.fileHistory, action)
     };
 }
 
