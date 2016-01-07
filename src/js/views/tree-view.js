@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../actions-creators'
+import * as actions from '../action-creators'
 
 const TreeViewUnderlying = React.createClass({
 
