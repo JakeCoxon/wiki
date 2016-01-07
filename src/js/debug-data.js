@@ -11,10 +11,15 @@ const content = {
         "title":"Lorem Ipsum",
         "body":"Lorem ipsum dolor sit amet, civibus adipisci erroribus eam ex, qui choro convenire id, sumo quando mel ad. Latine eligendi nam ad. Graeci cetero nonumes quo cu, quis falli vel ex. Porro elaboraret mea ne, sed te ullum simul timeam.\n\nAd vis soleat dolorum patrioque, at partem concludaturque mei, cu dolores iracundia eum. Nam et libris singulis praesent, explicari consetetur disputationi per et, assum urbanitas vis at. Eos no errem dolorum neglegentur. Dicam facilisi iudicabit id ius, no eam adhuc ullum.\n\nIllud augue ea qui. Harum nominavi et sed, dolore invidunt principes et cum, est ut quot noluisse. Has et ferri prodesset dissentiet, aeque semper deterruisset vel ea. Mediocrem sapientem at vel, quas praesent ne cum, ad nec errem noluisse."
      },
-     "4":{
+     "2":{
         "id":2,
         "title":"Home",
-        "body":"This is the home page of **Jake's Unnamed Wiki App**\n\nIt is basically a massive rip of [TiddlyWiki](http://tiddlywiki.com/) but it saves everything as JSON in Google Drive so your data is available any where.\n\nCheck out some other pages\n\n- [Some jiberish](/Lorem Ipsum)\n- [[Markdown example]]"
+        "body":"This is the home page of **Jake's Unnamed Wiki App**. It is a personal wiki for storing notes and information.\n\nIt is basically a massive rip of [[TiddlyWiki]] but it saves everything as JSON in Google Drive so your data is available any where.\n\nCheck out some other pages\n\n- [Some jiberish](/Lorem Ipsum)\n- [[Markdown example]]"
+     },
+     "3":{
+        "id":3,
+        "title":"TiddlyWiki",
+        "body":"TiddlyWiki is also a personal wiki application and can be found at this URL http://tiddlywiki.com/"
      },
   },
   "documentTree":{
