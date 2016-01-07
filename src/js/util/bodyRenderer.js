@@ -25,28 +25,13 @@ marked.InlineLexer.rules.pedantic.link = newLinkRule;
 marked.InlineLexer.rules.gfm.link = newLinkRule;
 marked.InlineLexer.rules.breaks.link = newLinkRule;
 
-// function constructLinks(token) {
-
-//     const { type, text } = token;
-
-
-
-// }
 
 export default function bodyRenderer(text) {
 
 
     const tokens = marked.lexer(text, options);
 
-    // flatMap(tokens, (token) => {
-    //     if (token.type === "paragraph" || token.type === "text") {
-    //         return constructLinks(token);
-    //     }
-    //     return token;
-    // })
-
     return marked.parser(tokens);
 
 }
 
-const flatMap = (array, lambda) => Array.prototype.concat.apply([], array.map(lambda)); 
