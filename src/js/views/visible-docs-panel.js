@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import * as actions from '../action-creators'
 
 const VisibleDocsPanelUnderlying = React.createClass({
 
     onToggle(documentId) {
 
-        return () => this.props.dispatch({ type: "VISIBLE/TOGGLE", documentId });
+        return () => this.props.dispatch(actions.visibleToggle(documentId));
 
     },
 
     closeAll() {
-        this.props.dispatch({ type: "VISIBLE/HIDE_ALL" });
+        this.props.dispatch(actions.visibleHideAll());
     },
 
     render() {

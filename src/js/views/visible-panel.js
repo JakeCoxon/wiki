@@ -4,6 +4,7 @@ import { TransitionMotion, spring } from 'react-motion'
 
 import { documentOpenLinkAfter } from '../action-creators'
 import DocView from '../views/doc-view.js'
+import * as actions from '../action-creators'
 
 import { connect } from 'react-redux'
 
@@ -14,15 +15,15 @@ const VisiblePanelUnderlying = React.createClass({
     },
 
     onClose(visibleId) {
-        return () => this.props.dispatch({ type: "VISIBLE/HIDE_INDEX", index: visibleId });
+        return () => this.props.dispatch(actions.visibleHideIndex(visibleId));
     },
 
     onDelete(id) {
-        return () => this.props.dispatch({ type: "DOC/REMOVE", id });
+        return () => this.props.dispatch(actions.documentRemove(id));
     },
 
     onDone(id) {
-        return ({ title, body }) => this.props.dispatch({ type: "DOC/UPDATE", id, title, body });
+        return ({ title, body }) => this.props.dispatch(actions.documentUpdate(id, title, body));
     },
 
     onOpenDocument(visibleId) {

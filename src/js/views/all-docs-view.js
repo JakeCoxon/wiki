@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { documentFreshInsert } from '../action-creators'
+import * as actions from '../action-creators'
 
 const AllDocsViewUnderlying = ({ documents, dispatch }) => {
-    const onToggle = (docId) => dispatch({ type: "VISIBLE/TOGGLE", documentId: docId });
+    const onToggle = (docId) => dispatch(actions.visibleToggle(docId));
     const onNew = () => {
-        const { id } = dispatch(documentFreshInsert("New document", ""));
-        dispatch({ type: "VISIBLE/SHOW", documentId: id })
+        const { id } = dispatch(actions.documentFreshInsert("New document", ""));
+        dispatch(actions.visibleShow(id))
     }
 
     const sorted = _.sortBy(documents, (doc) => doc.title.toLowerCase());

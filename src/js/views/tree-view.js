@@ -1,11 +1,11 @@
 import React from 'react'
-import { Doc } from '../models/models.js'
 import { connect } from 'react-redux'
+import * as actions from '../actions-creators'
 
 const TreeViewUnderlying = React.createClass({
 
     onToggle(documentId) {
-        return () => this.props.dispatch({ type: "VISIBLE/TOGGLE", documentId });
+        return () => this.props.dispatch(actions.visibleToggle(documentId));
     },
 
     onNew() {

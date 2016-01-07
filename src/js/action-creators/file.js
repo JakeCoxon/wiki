@@ -1,5 +1,10 @@
 import GoogleDriveService from '../services/google-drive-service'
 import { documentInsert } from './index.js'
+import * as fileConstants from '../reducers/file.js'
+import * as visibleConstants from '../reducers/visible.js'
+import * as treeConstants from '../reducers/tree.js'
+import * as documentsConstants from '../reducers/documents.js'
+import * as fileHistoryConstants from '../reducers/file-history.js'
 
 function resolveDataAndDispatch(dataPromise, dispatch) {
     return dataPromise
@@ -34,19 +39,19 @@ export function fileLoadSuccess(fileData) {
 
     return (dispatch) => {
 
-        dispatch({ type: "FILE/LOAD_SUCCESS", fileId: id, title });
-        dispatch({ type: "FILE_HISTORY/ADD", fileId: id, title });
+        dispatch({ type: fileConstants.LOAD_SUCCESS, fileId: id, title });
+        dispatch({ type: fileHistoryConstants.ADD, fileId: id, title });
 
-        dispatch({ type: "DOC/REMOVE_ALL" });
+        dispatch({ type: documentsConstants.REMOVE_ALL });
 
 
         _.forEach(content.documents, (document) => {
             const { id, title, body } = document;
             dispatch(documentInsert(id, title, body));
-            dispatch({ type: "TREE/INSERT", folderId: 'root', documentId: id });
+            dispatch({ type: treeConstants.INSERT, folderId: 'root', documentId: id });
         });
 
-        dispatch({ type: "VISIBLE/HIDE_ALL" });
+        dispatch({ type: visibleConstants.HIDE_ALL });
 
     }
 }

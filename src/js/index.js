@@ -9,6 +9,7 @@ import VisiblePanel from './views/visible-panel.js'
 import NavigationView from './views/navigation-view.js'
 
 import GoogleDriveService from './services/google-drive-service.js'
+import * as actions from './action-creators'
 
 import reducer from './reducers/index.js'
 import { Provider } from 'react-redux'
@@ -49,10 +50,7 @@ function load() {
         const allDocuments = store.getState().documents
         const homeDoc = _.find(allDocuments, doc => doc.title.toLowerCase() == 'home');
         if (homeDoc) {
-            store.dispatch({ 
-                type: "VISIBLE/SHOW",
-                documentId: homeDoc.id
-            })
+            store.dispatch(actions.visibleShow(homeDoc.id))
         }
     })
 
