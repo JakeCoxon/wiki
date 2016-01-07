@@ -29,7 +29,7 @@ gulp.task('webpack', function() {
 
 });
 
-gulp.task('deploy', function() {
+gulp.task('deploy', ['dist'], function() {
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
 });
