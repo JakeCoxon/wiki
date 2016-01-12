@@ -89,8 +89,8 @@ function uploadContent(fileId, title, content) {
         mimeType: contentType
     };
 
-    var path = 'upload/drive/v2/files';
-    var method = 'POST';
+    let path = 'upload/drive/v2/files';
+    let method = 'POST';
     if (fileId) {
         path += "/" + fileId;
         method = 'PUT';
@@ -130,7 +130,7 @@ function uploadContent(fileId, title, content) {
     });
 }
 
-var initialized = false;
+let initialized = false;
 function init() {
     if (initialized) return;
     initialized = true;

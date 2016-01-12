@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fileLoadData, filePick, fileLoadGoogleId, fileSave } from '../action-creators'
+import { fileLoadData, filePick, fileLoadGoogleId, fileSave, fileNew } from '../action-creators'
 
 
 const FileMenuViewUnderlying = React.createClass({
@@ -9,6 +9,10 @@ const FileMenuViewUnderlying = React.createClass({
     pickFile() {
         const loaded = this.props.dispatch(filePick());
         this.props.onDone && loaded.then(this.props.onDone);
+    },
+
+    newFile() {
+        this.props.dispatch(fileNew());
     },
 
     onLoadDebug() {
@@ -41,8 +45,8 @@ const FileMenuViewUnderlying = React.createClass({
                 {this.props.history && 
                     <div style={{ marginTop: 20 }}>
                         Recent files
-                        {this.props.history.map(({ fileId, title }) =>
-                            <div key={fileId}><button onClick={this.onLoadFile(fileId)}>{ title }</button></div>
+                        {this.props.history.map(({ fileId, title }, idx) =>
+                            <div key={fileId || idx}><button onClick={this.onLoadFile(fileId)}>{ title }</button></div>
                         )}
                     </div>
                 }
@@ -50,6 +54,7 @@ const FileMenuViewUnderlying = React.createClass({
                     Load other
                     <div><button onClick={this.onLoadDebug}>Load Debug File</button></div>
                     <div><button onClick={this.pickFile}>Load from Google</button></div>
+                    <div><button onClick={this.newFile}>New Empty File</button></div>
                 </div>
                 
             </div>

@@ -13,26 +13,24 @@ const TreeViewUnderlying = React.createClass({
     },
 
     render() {
-        const docTree = this.props.documentTree[this.props.folderId] || [];
+        const { children } = this.props;
 
-        const docDivs = docTree.map(docId => {
-            const doc = this.props.documents[docId];
-            if (!doc) return;
+        const docDivs = children.map(({ documentId, title, children }) => {
 
             const documentDiv = (
-                <div className="listitem" onClick={this.onToggle(docId)}>
-                    <div className="doclink">{doc.title}</div>
+                <div className="listitem" onClick={this.onToggle(documentId)}>
+                    <div className="doclink">{title}</div>
                 </div>
             );
 
-            const childrenDivs = this.props.documentTree[docId] && (
+            const childrenDivs = children && (
                 <div className="treeview-children">
-                    <TreeView folderId={docId} />
+                    <TreeView children={children} />
                 </div>
             );
 
             return (
-                <div className="treeview-document" key={docId}>
+                <div className="treeview-document" key={documentId}>
                     {documentDiv}
                     {childrenDivs}
                 </div>
@@ -48,11 +46,7 @@ const TreeViewUnderlying = React.createClass({
     }
 });
 
-const mapStateToProps = (state) => ({
-    documentTree: state.tree,
-    documents: state.documents
-})
-const TreeView = connect(mapStateToProps)(TreeViewUnderlying);
+const TreeView = connect()(TreeViewUnderlying);
 
 
 export default TreeView;

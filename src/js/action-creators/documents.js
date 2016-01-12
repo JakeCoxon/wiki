@@ -1,5 +1,8 @@
-import { visibleShowAt } from './index.js'
+import { visibleShowAt, tagsUpdate } from './index.js'
 import * as documentsConstants from '../reducers/documents.js'
+
+const findByTitle = (documents, title) => _.find(documents, (doc) => doc.title.toLowerCase() === title);
+
 
 let maxId = -1;
 export function documentFreshInsert(title, body) {
@@ -31,10 +34,9 @@ export function documentUpdate(id, title, body) {
 }
 
 export function documentOpenLinkAfter(visibleId, documentTitle) {
-    documentTitle = documentTitle.toLowerCase();
     return (dispatch, getState) => {
         const { documents, visible } = getState();
-        let document = _.find(documents, (doc) => doc.title.toLowerCase() === documentTitle);
+        let document = findByTitle(documents, documentTitle.toLowerCase());
 
         if (!document) {
             document = dispatch(documentFreshInsert(documentTitle, ""));

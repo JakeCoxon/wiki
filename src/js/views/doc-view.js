@@ -71,6 +71,21 @@ export default React.createClass({
                     <RenderedBodyWithDocumentLinks 
                         bodyHtml={renderedBody} 
                         onOpenDocument={this.props.onOpenDocument} />
+                    {this.props.tags && 
+                        <div className="docview-tags">
+                            Tags: {this.props.tags.map((tag, id) => {
+                                const click = (ev) => {
+                                    ev.preventDefault();
+                                    this.props.onOpenDocument(tag)
+                                }
+                                return (
+                                    <a key={id} 
+                                        style={{ marginRight: 2 }} 
+                                        href={"/" + tag} 
+                                        onClick={click}>{tag}</a>
+                                )
+                            })}
+                        </div>}
                 </div>
             </div>
         );

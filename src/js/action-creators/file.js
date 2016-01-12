@@ -1,5 +1,5 @@
 import GoogleDriveService from '../services/google-drive-service'
-import { documentInsert } from './index.js'
+import { documentInsert, tagsUpdate, fileHistoryAdd } from './index.js'
 import * as fileConstants from '../reducers/file.js'
 import * as visibleConstants from '../reducers/visible.js'
 import * as treeConstants from '../reducers/tree.js'
@@ -39,16 +39,19 @@ export function fileLoadSuccess(fileData) {
 
     return (dispatch) => {
 
-        dispatch({ type: fileConstants.LOAD_SUCCESS, fileId: id, title });
-        dispatch({ type: fileHistoryConstants.ADD, fileId: id, title });
+        dispatch({ type: fileConstants.SET_STATE, fileId: id, title });
+        dispatch(fileHistoryAdd(title, id));
 
         dispatch({ type: documentsConstants.REMOVE_ALL });
-
 
         _.forEach(content.documents, (document) => {
             const { id, title, body } = document;
             dispatch(documentInsert(id, title, body));
-            dispatch({ type: treeConstants.INSERT, folderId: 'root', documentId: id });
+        });
+
+        _.forEach(content.documents, (document) => {
+            const { id, tags } = document;
+            dispatch(tagsUpdate(id, tags || []));
         });
 
         dispatch({ type: visibleConstants.HIDE_ALL });
@@ -56,9 +59,29 @@ export function fileLoadSuccess(fileData) {
     }
 }
 
+export function fileNew() {
+    const title = prompt("New name to store in Google Drive");
+    if (!title || title.split(/\s*/).join("").length === 0) return;
+
+    return fileLoadSuccess({ 
+        id: undefined,
+        title: title,
+        content: {
+            documents: {
+                0: {
+                    id: 0,
+                    title: "Home",
+                    body: "",
+                    tags: ['TableOfContents']
+                }
+            }
+        }
+    })
+}
+
 export function fileSave() {
     return (dispatch, getState) => {
-        const { documents, tree, file } = getState();
+        const { documents, file, tags } = getState();
 
         if (!file) {
             throw new Error("No file has been loaded yet");
@@ -66,9 +89,23 @@ export function fileSave() {
 
         const { fileId, title } = file;
 
-        const content = JSON.stringify({ documents: documents, documentTree: tree });
+        const documentsWithTags = _.mapValues(documents, (document) => {
+            return {
+                ...document,
+                tags: tags.tags[document.id]
+            }
+        });
 
-        return GoogleDriveService.save(fileId, title, content);
+        const content = JSON.stringify({ documents: documentsWithTags });
+
+        const promise = GoogleDriveService.save(fileId, title, content);
+
+        promise.then((data) => {
+            const { id: fileId, title } = data;
+            dispatch({ type: fileConstants.SET_STATE, fileId, title });
+
+            dispatch(fileHistoryAdd(title, fileId));
+        })
     }
 }
 

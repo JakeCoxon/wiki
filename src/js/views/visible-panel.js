@@ -42,6 +42,10 @@ const VisiblePanelUnderlying = React.createClass({
             let currentShitId = (this.shits[documentId] || 0);
             const prevDocStyle = prevStyles[`doc:${documentId}:${currentShitId}`];
             const document = this.props.documents[documentId];
+            const tags = this.props.tagData.tags[documentId];
+            const documentData = {
+                document, tags
+            }
 
             if (prevDocStyle && prevDocStyle.leaving && prevDocStyle.visibleId != 0) {
 
@@ -61,7 +65,7 @@ const VisiblePanelUnderlying = React.createClass({
 
             array[index] = {
                 spring: spring(1),
-                document: document, 
+                documentData: documentData, 
                 visibleId: visibleId,
                 key: `doc:${documentId}:${currentShitId}`
             };
@@ -109,7 +113,7 @@ const VisiblePanelUnderlying = React.createClass({
     willEnter(key, styleOfKey, styles, currentInterpolatedStyle, currentVelocity) {
         return {
             spring: spring(0),
-            document: styleOfKey.document,
+            documentData: styleOfKey.documentData,
             visibleId: styleOfKey.visibleId
         };
     },
@@ -121,7 +125,7 @@ const VisiblePanelUnderlying = React.createClass({
         }
         return {
             spring: spring(0),
-            document: styleOfKey.document,
+            documentData: styleOfKey.documentData,
             visibleId: styleOfKey.visibleId,
             leaving: true
         };
@@ -140,7 +144,8 @@ const VisiblePanelUnderlying = React.createClass({
         return (
             <div>
             {Object.keys(interpolatedStyles).map((key, idx) => {
-                const { spring, document, visibleId } = interpolatedStyles[key];
+                const { spring, documentData, visibleId } = interpolatedStyles[key];
+                const { document, tags } = documentData;
                 const { id: documentId, title, body } = document;
 
                 const x = lerp(spring, -100, 0);
@@ -174,6 +179,7 @@ const VisiblePanelUnderlying = React.createClass({
                                     preferredHeight={this.state.heights[key]}
                                     title={title} 
                                     body={body} 
+                                    tags={tags}
                                     onClose={this.onClose(visibleId)} 
                                     onDone={this.onDone(documentId)}
                                     onDelete={this.onDelete(documentId)}
@@ -207,7 +213,8 @@ const VisiblePanelUnderlying = React.createClass({
 
 const mapStateToProps = (state) => ({
     visible: state.visible,
-    documents: state.documents
+    documents: state.documents,
+    tagData: state.tags
 })
 const VisiblePanel = connect(mapStateToProps)(VisiblePanelUnderlying);
 
